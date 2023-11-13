@@ -1,23 +1,21 @@
-import logo from './logo.svg';
 import './App.css';
+import { useEffect } from 'react';
+import background from './scripts/background.ts';
+import constants from './utils/constants.ts';
 
 function App() {
+  useEffect(() => {
+    const canvas = document.querySelector("canvas");
+    const oBg = new background({
+      height: constants.CanvasDim.y,
+      width: constants.CanvasDim.x,
+      canvas: canvas
+    });
+  }, [])
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <canvas id="canvas"/>
     </div>
   );
 }
