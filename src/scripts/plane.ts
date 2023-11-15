@@ -39,7 +39,7 @@ class plane {
         this.height = height
         this.offset = { x, y }
         this.velocity = {
-            x: 5,
+            x: constants.Plane.velocityX,
             y: 5
         }
     }
@@ -51,7 +51,8 @@ class plane {
 
     public moveLeft() {
         if (this.offset.x > 0) {
-            this.velocity.x += 1
+            // TODO: control velocity
+            // this.velocity.x += 1
             if (this.offset.x - this.velocity.x > 0) {
                 this.offset.x -= this.velocity.x
             } else {
@@ -61,8 +62,9 @@ class plane {
     }
 
     public moveRight() {
-        if (this.offset.x < constants.CanvasDim.x) {
-            this.velocity.x += 1
+        if (this.offset.x + this.width < constants.CanvasDim.x) {
+            // TODO: control velocity
+            // this.velocity.x += 1
             if (this.offset.x + this.velocity.x < constants.CanvasDim.x) {
                 this.offset.x += this.velocity.x
             } else {
@@ -73,7 +75,7 @@ class plane {
     }
 
     public resetVelocityX() {
-        this.velocity.x = 0
+        this.velocity.x = constants.Plane.velocityX
     }
 }
 

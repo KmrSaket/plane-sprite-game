@@ -1,3 +1,4 @@
+import constants from "../utils/constants.ts"
 import plane from "./plane.ts"
 
 class background {
@@ -7,14 +8,16 @@ class background {
     private width: number
     private height: number
 
-    private planeHeight: number = 30
-    private planeWidth: number = 30
 
     private keyEvent: {
         lastPressedX: string,
+        leftPressed: boolean,
+        rightPressed: boolean,
         lastPressedY: string
     } = {
             lastPressedX: "",
+            leftPressed: false,
+            rightPressed: false,
             lastPressedY: ""
         }
 
@@ -36,9 +39,9 @@ class background {
         this.canvasContext.fillStyle = "#000000";
         this.canvasContext.fillRect(0, 0, width, height);
         this.plane = new plane({
-            offset: { x: this.width / 2, y: this.height - this.planeHeight },
-            height: this.planeHeight,
-            width: this.planeWidth,
+            offset: { x: this.width / 2, y: this.height - constants.Plane.height },
+            height: constants.Plane.height,
+            width: constants.Plane.width,
             canvasContext: this.canvasContext
         })
 
@@ -53,15 +56,11 @@ class background {
     }
 
     update() {
-        switch (this.keyEvent.lastPressedX) {
-            case "L":
-                this.plane.moveLeft()
-                break;
-            case "R":
-                this.plane.moveRight()
-                break;
+        if (this.keyEvent.lastPressedX === "L" && this.keyEvent.leftPressed) {
+            this.plane.moveLeft()
+        } else if (this.keyEvent.lastPressedX === "R" && this.keyEvent.rightPressed) {
+            this.plane.moveRight()
         }
-        this.keyEvent.lastPressedX = ""
         this.draw()
         this.plane.draw()
     }
@@ -71,9 +70,11 @@ class background {
             switch (oEvent.key) {
                 case "ArrowLeft":
                     this.keyEvent.lastPressedX = "L"
+                    this.keyEvent.leftPressed = true
                     break;
                 case "ArrowRight":
                     this.keyEvent.lastPressedX = "R"
+                    this.keyEvent.rightPressed = true
                     break;
                 case "ArrowUp":
 
@@ -89,15 +90,23 @@ class background {
         window.addEventListener("keyup", (oEvent) => {
             switch (oEvent.key) {
                 case "ArrowLeft":
+                    this.keyEvent.leftPressed = false
+                    if (this.keyEvent.rightPressed) {
+                        this.keyEvent.lastPressedX = "R"
+                    }
+                    break
                 case "ArrowRight":
-                    this.plane.resetVelocityX()
-                    break;
+                    this.keyEvent.rightPressed = false
+                    if (this.keyEvent.leftPressed) {
+                        this.keyEvent.lastPressedX = "L"
+                    }
+                    break
                 case "ArrowUp":
 
-                    break;
+                    break
                 case "ArrowDown":
 
-                    break;
+                    break
             }
 
         })
