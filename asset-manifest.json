@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/plane-sprite-game/static/css/main.f855e6bc.css",
-    "main.js": "/plane-sprite-game/static/js/main.232dfccd.js",
+    "main.js": "/plane-sprite-game/static/js/main.ae1e12d3.js",
     "static/js/787.ea55a97d.chunk.js": "/plane-sprite-game/static/js/787.ea55a97d.chunk.js",
     "index.html": "/plane-sprite-game/index.html",
     "main.f855e6bc.css.map": "/plane-sprite-game/static/css/main.f855e6bc.css.map",
-    "main.232dfccd.js.map": "/plane-sprite-game/static/js/main.232dfccd.js.map",
+    "main.ae1e12d3.js.map": "/plane-sprite-game/static/js/main.ae1e12d3.js.map",
     "787.ea55a97d.chunk.js.map": "/plane-sprite-game/static/js/787.ea55a97d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.f855e6bc.css",
-    "static/js/main.232dfccd.js"
+    "static/js/main.ae1e12d3.js"
   ]
 }
