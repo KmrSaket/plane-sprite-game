@@ -1,10 +1,13 @@
 import constants from "../utils/constants.ts"
+import util from "../utils/util.ts"
+import foreignObjects from "./foreignObjects.ts"
 import plane from "./plane.ts"
 
 class background {
     private canvas: HTMLCanvasElement
     private canvasContext: CanvasRenderingContext2D
     private plane: plane
+    private object: foreignObjects
     private width: number
     private height: number
 
@@ -45,17 +48,19 @@ class background {
             canvasContext: this.canvasContext
         })
 
+        this.object = this.createForeignObjects()
+
         this.attachKeyDownEventListener()
         this.attachKeyUpEventListener()
         this.animate()
     }
 
-    draw() {
+    private draw() {
         this.canvasContext.fillStyle = "#000000";
         this.canvasContext.fillRect(0, 0, this.width, this.height);
     }
 
-    update() {
+    private update() {
         if (this.keyEvent.lastPressedX === "L" && this.keyEvent.leftPressed) {
             this.plane.moveLeft()
         } else if (this.keyEvent.lastPressedX === "R" && this.keyEvent.rightPressed) {
@@ -63,9 +68,19 @@ class background {
         }
         this.draw()
         this.plane.draw()
+        this.object.draw()
     }
 
-    attachKeyDownEventListener() {
+    private createForeignObjects() {
+        return new foreignObjects({
+            offset: { x: util.getRandomValue({ min: 0, max: this.width }), y: 0 },
+            height: constants.ForeignObjects.height,
+            width: constants.ForeignObjects.width,
+            canvasContext: this.canvasContext
+        })
+    }
+
+    private attachKeyDownEventListener() {
         window.addEventListener("keydown", (oEvent) => {
             switch (oEvent.key) {
                 case "ArrowLeft":
@@ -86,7 +101,7 @@ class background {
         })
     }
 
-    attachKeyUpEventListener() {
+    private attachKeyUpEventListener() {
         window.addEventListener("keyup", (oEvent) => {
             switch (oEvent.key) {
                 case "ArrowLeft":

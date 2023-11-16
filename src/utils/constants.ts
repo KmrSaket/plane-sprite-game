@@ -16,5 +16,15 @@ abstract class constants {
             height: 50,
             width: 50
         }
+
+    public static ForeignObjects: {
+        velocityY: number,
+        height: number,
+        width: number
+    } = {
+            velocityY: 6,
+            height: 20,
+            width: 20
+        }
 }
 export default constants

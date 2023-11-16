@@ -1,6 +1,7 @@
 import constants from "../utils/constants.ts"
+import util from "../utils/util.ts"
 
-class plane {
+class foreignObjects {
     private canvasContext: CanvasRenderingContext2D
     private width: number
     private height: number
@@ -35,44 +36,34 @@ class plane {
         this.height = height
         this.offset = { x, y }
         this.velocity = {
-            x: constants.Plane.velocityX,
-            y: 5
+            x: 0,
+            y: constants.ForeignObjects.velocityY
         }
     }
 
     public draw() {
-        this.canvasContext.fillStyle = "#FFFFFF";
+        this.canvasContext.fillStyle = "#FF0000";
         this.canvasContext.fillRect(this.offset.x, this.offset.y, this.width, this.height);
+        this.shiftDown()
     }
 
-    public moveLeft() {
-        if (this.offset.x > 0) {
-            // TODO: control velocity
-            // this.velocity.x += 1
-            if (this.offset.x - this.velocity.x > 0) {
-                this.offset.x -= this.velocity.x
+    private shiftDown() {
+        if (this.offset.y + this.height < constants.CanvasDim.y) {
+            if (this.offset.y + this.velocity.y < constants.CanvasDim.y) {
+                this.offset.y += this.velocity.y
             } else {
-                this.offset.x = 0
+                this.offset.y = constants.CanvasDim.y - this.height
             }
+        } else {
+            this.resetOffset()
         }
     }
 
-    public moveRight() {
-        if (this.offset.x + this.width < constants.CanvasDim.x) {
-            // TODO: control velocity
-            // this.velocity.x += 1
-            if (this.offset.x + this.velocity.x < constants.CanvasDim.x) {
-                this.offset.x += this.velocity.x
-            } else {
-                this.offset.x = constants.CanvasDim.x - this.width
-
-            }
-        }
-    }
-
-    public resetVelocityX() {
-        this.velocity.x = constants.Plane.velocityX
+    private resetOffset() {
+        this.offset.x = util.getRandomValue({ max: constants.CanvasDim.x, min: 0 })
+        this.offset.y = 0
     }
 }
 
-export default plane;
+export default foreignObjects
+
