@@ -4,16 +4,14 @@ import foreignObjects from "./foreignObjects.ts"
 import plane from "./plane.ts"
 
 class background {
+
+    // private attributes
     private canvas: HTMLCanvasElement
     private canvasContext: CanvasRenderingContext2D
     private plane: plane
     private object: foreignObjects
     private width: number
     private height: number
-    // XXX temp code
-    private counter: number = 0
-
-
     private keyEvent: {
         lastPressedX: string,
         leftPressed: boolean,
@@ -25,7 +23,17 @@ class background {
             rightPressed: false,
             lastPressedY: ""
         }
+    // XXX temp code
+    private counter: number = 0
 
+
+    // Methods
+    /**
+     * Constructor to create background object
+     * @param height - Height of canvas 
+     * @param width - Width of canvas 
+     * @param canvas - Canvas element
+     */
     constructor({
         height,
         width,
@@ -41,8 +49,12 @@ class background {
         this.canvasContext = this.canvas.getContext("2d")
         this.canvas.width = width
         this.canvas.height = height
+
+        // draw background initially
         this.canvasContext.fillStyle = "#000000";
         this.canvasContext.fillRect(0, 0, width, height);
+
+        // create plane object
         this.plane = new plane({
             offset: { x: this.width / 2, y: this.height - constants.Plane.height },
             height: constants.Plane.height,
@@ -50,35 +62,50 @@ class background {
             canvasContext: this.canvasContext
         })
 
+        // create foreign object
         this.object = this.createForeignObjects()
 
+        // attach event listeners
         this.attachKeyDownEventListener()
         this.attachKeyUpEventListener()
+
+        // animate window
         this.animate()
     }
 
+    /**
+     * Draw background
+     */
     private draw() {
         this.canvasContext.fillStyle = "#000000";
         this.canvasContext.fillRect(0, 0, this.width, this.height);
     }
 
+    /**
+     * Update offsets on key event, check collision and 
+     * draw background, plane and object
+     */
     private update() {
+        // Move left on press of L and else Move right on press of R
         if (this.keyEvent.lastPressedX === "L" && this.keyEvent.leftPressed) {
             this.plane.moveLeft()
         } else if (this.keyEvent.lastPressedX === "R" && this.keyEvent.rightPressed) {
             this.plane.moveRight()
         }
 
+        // check if plane has collided with foriegn object
         if (util.isCollision({
             offsetOne: this.plane.getOffset(),
             DimensionOne: this.plane.getDimension(),
             offsetTwo: this.object.getOffset(),
             DimensionTwo: this.object.getDimension()
         })) {
+            // if collided increase the collision counter
             this.object.touchedPlane()
             this.counter++
         }
 
+        // draw background first, then plane and lastly foreign object
         this.draw()
         this.plane.draw()
         this.object.draw()
@@ -89,6 +116,10 @@ class background {
         this.canvasContext.fillText("Collision counter: " + this.counter, 10, 20)
     }
 
+    /**
+     * Method to create foreign object
+     * @returns foreignObjects - returns the foreign object
+     */
     private createForeignObjects() {
         return new foreignObjects({
             offset: { x: util.getRandomValue({ min: 0, max: this.width }), y: 0 },
@@ -98,6 +129,9 @@ class background {
         })
     }
 
+    /**
+     * To attach key down event for L/R/U/D
+     */
     private attachKeyDownEventListener() {
         window.addEventListener("keydown", (oEvent) => {
             switch (oEvent.key) {
@@ -118,7 +152,9 @@ class background {
             }
         })
     }
-
+    /**
+     * To attach key up event for L/R/U/D
+     */
     private attachKeyUpEventListener() {
         window.addEventListener("keyup", (oEvent) => {
             switch (oEvent.key) {
@@ -145,6 +181,9 @@ class background {
         })
     }
 
+    /**
+     * Method to animate in loop
+     */
     private animate = () => {
         this.update()
         window.requestAnimationFrame(this.animate)
