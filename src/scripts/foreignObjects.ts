@@ -63,6 +63,18 @@ class foreignObjects {
         this.offset.x = util.getRandomValue({ max: constants.CanvasDim.x, min: 0 })
         this.offset.y = 0
     }
+
+    public getOffset() {
+        return this.offset
+    }
+
+    public getDimension() {
+        return { height: this.height, width: this.width }
+    }
+
+    public touchedPlane() {
+        this.resetOffset()
+    }
 }
 
 export default foreignObjects

@@ -73,6 +73,14 @@ class plane {
     public resetVelocityX() {
         this.velocity.x = constants.Plane.velocityX
     }
+
+    public getOffset() {
+        return this.offset
+    }
+
+    public getDimension() {
+        return { height: this.height, width: this.width }
+    }
 }
 
 export default plane;

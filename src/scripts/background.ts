@@ -10,6 +10,8 @@ class background {
     private object: foreignObjects
     private width: number
     private height: number
+    // XXX temp code
+    private counter: number = 0
 
 
     private keyEvent: {
@@ -66,9 +68,25 @@ class background {
         } else if (this.keyEvent.lastPressedX === "R" && this.keyEvent.rightPressed) {
             this.plane.moveRight()
         }
+
+        if (util.isCollision({
+            offsetOne: this.plane.getOffset(),
+            DimensionOne: this.plane.getDimension(),
+            offsetTwo: this.object.getOffset(),
+            DimensionTwo: this.object.getDimension()
+        })) {
+            this.object.touchedPlane()
+            this.counter++
+        }
+
         this.draw()
         this.plane.draw()
         this.object.draw()
+
+        //XXX: temp code for counter
+        this.canvasContext.font = "20px Comic Sans MS";
+        this.canvasContext.fillStyle = "grey"
+        this.canvasContext.fillText("Collision counter: " + this.counter, 10, 20)
     }
 
     private createForeignObjects() {

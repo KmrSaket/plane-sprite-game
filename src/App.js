@@ -15,6 +15,7 @@ function App() {
   
   return (
     <div className="App">
+      {/* <h6>Collision Counter: </h6> */}
       <canvas id="canvas"/>
     </div>
   );
