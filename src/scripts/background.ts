@@ -16,12 +16,16 @@ class background {
         lastPressedX: string,
         leftPressed: boolean,
         rightPressed: boolean,
-        lastPressedY: string
+        lastPressedY: string,
+        upPressed: boolean,
+        downPressed: boolean
     } = {
             lastPressedX: "",
             leftPressed: false,
             rightPressed: false,
-            lastPressedY: ""
+            lastPressedY: "",
+            upPressed: false,
+            downPressed: false
         }
     // XXX temp code
     private counter: number = 0
@@ -93,6 +97,14 @@ class background {
             this.plane.moveRight()
         }
 
+
+        // Move up on press of U and else Move down on press of D
+        if (this.keyEvent.lastPressedY === "U" && this.keyEvent.upPressed) {
+            this.plane.moveUp()
+        } else if (this.keyEvent.lastPressedY === "D" && this.keyEvent.downPressed) {
+            this.plane.moveDown()
+        }
+
         // check if plane has collided with foriegn object
         if (util.isCollision({
             offsetOne: this.plane.getOffset(),
@@ -144,10 +156,12 @@ class background {
                     this.keyEvent.rightPressed = true
                     break;
                 case "ArrowUp":
-
+                    this.keyEvent.lastPressedY = "U"
+                    this.keyEvent.upPressed = true
                     break;
                 case "ArrowDown":
-
+                    this.keyEvent.lastPressedY = "D"
+                    this.keyEvent.downPressed = true
                     break;
             }
         })
@@ -171,10 +185,16 @@ class background {
                     }
                     break
                 case "ArrowUp":
-
+                    this.keyEvent.upPressed = false
+                    if (this.keyEvent.upPressed) {
+                        this.keyEvent.lastPressedY = "D"
+                    }
                     break
                 case "ArrowDown":
-
+                    this.keyEvent.downPressed = false
+                    if (this.keyEvent.downPressed) {
+                        this.keyEvent.lastPressedY = "U"
+                    }
                     break
             }
 

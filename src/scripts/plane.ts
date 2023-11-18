@@ -65,7 +65,30 @@ class plane {
                 this.offset.x += this.velocity.x
             } else {
                 this.offset.x = constants.CanvasDim.x - this.width
+            }
+        }
+    }
 
+    public moveUp() {
+        if (this.offset.y > 0) {
+            // TODO: control velocity
+            // this.velocity.x += 1
+            if (this.offset.y - this.velocity.y > 0) {
+                this.offset.y -= this.velocity.y
+            } else {
+                this.offset.y = 0
+            }
+        }
+    }
+
+    public moveDown() {
+        if (this.offset.y + this.height < constants.CanvasDim.y) {
+            // TODO: control velocity
+            // this.velocity.x += 1
+            if (this.offset.y + this.velocity.y < constants.CanvasDim.y) {
+                this.offset.y += this.velocity.y
+            } else {
+                this.offset.y = constants.CanvasDim.y - this.height
             }
         }
     }
