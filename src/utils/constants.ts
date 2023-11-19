@@ -26,5 +26,11 @@ abstract class constants {
             height: 20,
             width: 20
         }
+
+    public static Background: {
+        imgSrc: string
+    } = {
+            imgSrc: "https://opengameart.org/sites/default/files/background-1_0.png"
+        }
 }
 export default constants

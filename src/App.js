@@ -6,7 +6,7 @@ import constants from './utils/constants.ts';
 function App() {
   useEffect(() => {
     const canvas = document.querySelector("canvas");
-    const oBg = new background({
+    new background({
       height: constants.CanvasDim.y,
       width: constants.CanvasDim.x,
       canvas: canvas

@@ -27,6 +27,7 @@ class background {
             upPressed: false,
             downPressed: false
         }
+    private image: HTMLImageElement
     // XXX temp code
     private counter: number = 0
 
@@ -55,8 +56,11 @@ class background {
         this.canvas.height = height
 
         // draw background initially
-        this.canvasContext.fillStyle = "#000000";
-        this.canvasContext.fillRect(0, 0, width, height);
+        this.image = new Image()
+        // this.image.src = 
+        this.image.onload = () => {
+            this.canvasContext.drawImage(this.image, 0, 0, this.width, this.height)
+        }
 
         // create plane object
         this.plane = new plane({
@@ -81,8 +85,7 @@ class background {
      * Draw background
      */
     private draw() {
-        this.canvasContext.fillStyle = "#000000";
-        this.canvasContext.fillRect(0, 0, this.width, this.height);
+        this.canvasContext.drawImage(this.image, 0, 0)
     }
 
     /**
