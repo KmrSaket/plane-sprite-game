@@ -30,7 +30,13 @@ abstract class constants {
     public static Background: {
         imgSrc: string
     } = {
-            imgSrc: "https://opengameart.org/sites/default/files/background-1_0.png"
+            imgSrc: "https://raw.githubusercontent.com/KmrSaket/plane-sprite-game/master/public/assets/background.jpeg"
+        }
+
+    public static player: {
+        imgSrc: string
+    } = {
+            imgSrc: "https://raw.githubusercontent.com/KmrSaket/plane-sprite-game/master/public/assets/old%20truck.png"
         }
 }
 export default constants

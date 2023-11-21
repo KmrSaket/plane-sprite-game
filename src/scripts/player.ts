@@ -1,6 +1,6 @@
 import constants from "../utils/constants.ts"
 
-class plane {
+class player {
     private canvasContext: CanvasRenderingContext2D
     private width: number
     private height: number
@@ -12,6 +12,7 @@ class plane {
         x: number,
         y: number
     }
+    private image: HTMLImageElement
 
     constructor({
         height,
@@ -20,7 +21,8 @@ class plane {
         offset: {
             x,
             y
-        }
+        },
+        playerImage
     }: {
         height: number,
         width: number,
@@ -28,7 +30,8 @@ class plane {
         offset: {
             x: number,
             y: number
-        }
+        },
+        playerImage: HTMLImageElement
     }) {
         this.canvasContext = canvasContext
         this.width = width
@@ -38,11 +41,12 @@ class plane {
             x: constants.Plane.velocityX,
             y: 5
         }
+        this.image = playerImage
     }
 
     public draw() {
-        this.canvasContext.fillStyle = "#FFFFFF";
-        this.canvasContext.fillRect(this.offset.x, this.offset.y, this.width, this.height);
+        // this.canvasContext.fillStyle = "#FFFFFF";
+        this.canvasContext.drawImage(this.image, this.offset.x, this.offset.y, this.width, this.height);
     }
 
     public moveLeft() {
@@ -106,4 +110,4 @@ class plane {
     }
 }
 
-export default plane;
+export default player;

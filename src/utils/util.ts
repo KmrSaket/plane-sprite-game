@@ -16,6 +16,14 @@ abstract class util {
         return false
     }
 
+    public static createImgElement(src: string) {
+        let oImage = new Image()
+        oImage.src = src
+        oImage.onload = () => {
+            return oImage
+        }
+    }
+
 }
 
 export default util

@@ -1,14 +1,14 @@
 import constants from "../utils/constants.ts"
 import util from "../utils/util.ts"
 import foreignObjects from "./foreignObjects.ts"
-import plane from "./plane.ts"
+import player from "./player.ts"
 
 class background {
 
     // private attributes
     private canvas: HTMLCanvasElement
     private canvasContext: CanvasRenderingContext2D
-    private plane: plane
+    private player: player
     private object: foreignObjects
     private width: number
     private height: number
@@ -51,15 +51,20 @@ class background {
      * @param height - Height of canvas 
      * @param width - Width of canvas 
      * @param canvas - Canvas element
+     * @param image - background image
      */
     constructor({
         height,
         width,
-        canvas
+        canvas,
+        image,
+        playerImage
     }: {
         height: number,
         width: number,
-        canvas: HTMLCanvasElement
+        canvas: HTMLCanvasElement,
+        image: HTMLImageElement,
+        playerImage: HTMLImageElement
     }) {
         this.canvas = canvas
         this.height = height
@@ -71,22 +76,19 @@ class background {
         this.offset.invertedImgy = -this.height
 
         // draw background initially
-        this.normalImage = new Image()
-        this.normalImage.src = "https://raw.githubusercontent.com/KmrSaket/plane-sprite-game/master/public/assets/background.jpeg"
-        this.normalImage.onload = () => {
-            this.canvasContext.drawImage(this.normalImage, this.offset.normalImgx, this.offset.normalImgy, this.width, this.height)
-        }
+        this.normalImage = image
+        this.canvasContext.drawImage(this.normalImage, this.offset.normalImgx, this.offset.normalImgy, this.width, this.height)
 
-        this.invertedImage = new Image()
-        this.invertedImage.src = "https://raw.githubusercontent.com/KmrSaket/plane-sprite-game/master/public/assets/background.jpeg"
+        this.invertedImage = image
         this.invertedImage.style.transform = "rotate(180deg)"
 
         // create plane object
-        this.plane = new plane({
+        this.player = new player({
             offset: { x: this.width / 2, y: this.height - constants.Plane.height },
             height: constants.Plane.height,
             width: constants.Plane.width,
-            canvasContext: this.canvasContext
+            canvasContext: this.canvasContext,
+            playerImage: playerImage
         })
 
         // create foreign object
@@ -131,23 +133,23 @@ class background {
     private update() {
         // Move left on press of L and else Move right on press of R
         if (this.keyEvent.lastPressedX === "L" && this.keyEvent.leftPressed) {
-            this.plane.moveLeft()
+            this.player.moveLeft()
         } else if (this.keyEvent.lastPressedX === "R" && this.keyEvent.rightPressed) {
-            this.plane.moveRight()
+            this.player.moveRight()
         }
 
 
         // Move up on press of U and else Move down on press of D
         if (this.keyEvent.lastPressedY === "U" && this.keyEvent.upPressed) {
-            this.plane.moveUp()
+            this.player.moveUp()
         } else if (this.keyEvent.lastPressedY === "D" && this.keyEvent.downPressed) {
-            this.plane.moveDown()
+            this.player.moveDown()
         }
 
         // check if plane has collided with foriegn object
         if (util.isCollision({
-            offsetOne: this.plane.getOffset(),
-            DimensionOne: this.plane.getDimension(),
+            offsetOne: this.player.getOffset(),
+            DimensionOne: this.player.getDimension(),
             offsetTwo: this.object.getOffset(),
             DimensionTwo: this.object.getDimension()
         })) {
@@ -158,7 +160,7 @@ class background {
 
         // draw background first, then plane and lastly foreign object
         this.draw()
-        this.plane.draw()
+        this.player.draw()
         this.object.draw()
 
         //XXX: temp code for counter
