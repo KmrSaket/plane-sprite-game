@@ -80,13 +80,12 @@ class background {
         this.canvasContext.drawImage(this.normalImage, this.offset.normalImgx, this.offset.normalImgy, this.width, this.height)
 
         this.invertedImage = image
-        this.invertedImage.style.transform = "rotate(180deg)"
 
         // create plane object
         this.player = new player({
-            offset: { x: this.width / 2, y: this.height - constants.Plane.height },
-            height: constants.Plane.height,
-            width: constants.Plane.width,
+            offset: { x: this.width / 2, y: this.height - constants.Player.height },
+            height: constants.Player.height,
+            width: constants.Player.width,
             canvasContext: this.canvasContext,
             playerImage: playerImage
         })

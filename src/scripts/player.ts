@@ -38,7 +38,7 @@ class player {
         this.height = height
         this.offset = { x, y }
         this.velocity = {
-            x: constants.Plane.velocityX,
+            x: constants.Player.velocityX,
             y: 5
         }
         this.image = playerImage
@@ -98,7 +98,7 @@ class player {
     }
 
     public resetVelocityX() {
-        this.velocity.x = constants.Plane.velocityX
+        this.velocity.x = constants.Player.velocityX
     }
 
     public getOffset() {

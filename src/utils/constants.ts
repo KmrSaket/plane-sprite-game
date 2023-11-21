@@ -7,14 +7,14 @@ abstract class constants {
             y: 500
         }
 
-    public static Plane: {
+    public static Player: {
         velocityX: number,
         height: number,
         width: number
     } = {
             velocityX: 10,
-            height: 50,
-            width: 50
+            height: 150,
+            width: 74
         }
 
     public static ForeignObjects: {
@@ -28,9 +28,11 @@ abstract class constants {
         }
 
     public static Background: {
-        imgSrc: string
+        imgSrc: string,
+        altImgSrc: string
     } = {
-            imgSrc: "https://raw.githubusercontent.com/KmrSaket/plane-sprite-game/master/public/assets/background.jpeg"
+            imgSrc: "https://raw.githubusercontent.com/KmrSaket/plane-sprite-game/master/public/assets/background.jpeg",
+            altImgSrc: "https://raw.githubusercontent.com/KmrSaket/plane-sprite-game/master/public/assets/background-rotated.jpeg"
         }
 
     public static player: {

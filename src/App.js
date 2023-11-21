@@ -23,16 +23,21 @@ function App() {
   oBackgroundImage.onload = () => {
     setNumOfAssets((prev) => prev + 1)
   }
+  
+  let oAltBackgroundImage = new Image()
+  oAltBackgroundImage.src = constants.Background.imgSrc
+  oAltBackgroundImage.onload = () => {
+    setNumOfAssets((prev) => prev + 1)
+  }
 
   let oTruckImage = new Image()
   oTruckImage.src = constants.player.imgSrc
   oTruckImage.onload = () => {
-    oTruckImage.style.transform = "rotate(90deg)"
     setNumOfAssets((prev) => prev + 1)
   }
 
   useEffect(() => {
-    if(numOfAssets === 2){
+    if(numOfAssets === 3){
       setDisplayCanvas(true)
     }
   }, [numOfAssets])
@@ -42,7 +47,7 @@ function App() {
       {
         displayCanvas
         &&
-       <Game bgImage={oBackgroundImage} playerImage={oTruckImage}/>
+       <Game bgImage={oBackgroundImage} playerImage={oTruckImage} altBgImage={oAltBackgroundImage}/>
       }
     </div>
   );

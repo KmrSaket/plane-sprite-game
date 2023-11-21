@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import background from './scripts/background.ts';
 import constants from './utils/constants.ts';
 
-function Game({bgImage,playerImage}) {
+function Game({bgImage,altBgImage,playerImage}) {
 
   let canvasRef = useRef(null)
   let [gameStarted,setGameStarted] = useState(false)
@@ -16,12 +16,13 @@ function Game({bgImage,playerImage}) {
           width: constants.CanvasDim.x,
           canvas: canvas,
           image: bgImage,
+          altImage: altBgImage,
           playerImage: playerImage
         });
         setGameStarted(true)
       }
     }
-  },[bgImage, gameStarted, playerImage])
+  },[altBgImage, bgImage, gameStarted, playerImage])
 
   return (
     <>
