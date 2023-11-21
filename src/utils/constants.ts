@@ -22,7 +22,7 @@ abstract class constants {
         height: number,
         width: number
     } = {
-            velocityY: 6,
+            velocityY: 4,
             height: 20,
             width: 20
         }

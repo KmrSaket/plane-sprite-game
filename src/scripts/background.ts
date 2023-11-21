@@ -27,7 +27,20 @@ class background {
             upPressed: false,
             downPressed: false
         }
-    private image: HTMLImageElement
+    private normalImage: HTMLImageElement
+    private invertedImage: HTMLImageElement
+    private offset: {
+        normalImgx: number,
+        normalImgy: number,
+        invertedImgx: number,
+        invertedImgy: number
+    } = {
+            normalImgx: 0,
+            normalImgy: 0,
+            invertedImgx: 0,
+            invertedImgy: 0
+        }
+
     // XXX temp code
     private counter: number = 0
 
@@ -55,12 +68,18 @@ class background {
         this.canvas.width = width
         this.canvas.height = height
 
+        this.offset.invertedImgy = -this.height
+
         // draw background initially
-        this.image = new Image()
-        // this.image.src = 
-        this.image.onload = () => {
-            this.canvasContext.drawImage(this.image, 0, 0, this.width, this.height)
+        this.normalImage = new Image()
+        this.normalImage.src = "https://raw.githubusercontent.com/KmrSaket/plane-sprite-game/master/public/assets/background.jpeg"
+        this.normalImage.onload = () => {
+            this.canvasContext.drawImage(this.normalImage, this.offset.normalImgx, this.offset.normalImgy, this.width, this.height)
         }
+
+        this.invertedImage = new Image()
+        this.invertedImage.src = "https://raw.githubusercontent.com/KmrSaket/plane-sprite-game/master/public/assets/background.jpeg"
+        this.invertedImage.style.transform = "rotate(180deg)"
 
         // create plane object
         this.plane = new plane({
@@ -85,7 +104,24 @@ class background {
      * Draw background
      */
     private draw() {
-        this.canvasContext.drawImage(this.image, 0, 0)
+        this.moveDown()
+        this.canvasContext.fillStyle = "#FFFFFF"
+        this.canvasContext.fillRect(0, 0, this.width, this.height)
+
+        this.canvasContext.drawImage(this.normalImage, this.offset.normalImgx, this.offset.normalImgy, this.width, this.height)
+        this.canvasContext.drawImage(this.invertedImage, this.offset.invertedImgx, this.offset.invertedImgy, this.width, this.height)
+    }
+
+    private moveDown() {
+        this.offset.normalImgy += constants.ForeignObjects.velocityY
+        if (this.offset.normalImgy > this.height) {
+            this.offset.normalImgy = -this.height
+        }
+
+        this.offset.invertedImgy += constants.ForeignObjects.velocityY
+        if (this.offset.invertedImgy > this.height) {
+            this.offset.invertedImgy = -this.height
+        }
     }
 
     /**
