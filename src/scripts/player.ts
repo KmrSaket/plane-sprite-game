@@ -55,25 +55,27 @@ class player {
     }
 
     public moveLeft() {
-        if (this.offset.x > 0) {
+        let marginLeft = constants.CanvasDim.x - constants.Game.PlayerMaxX
+        if (this.offset.x > marginLeft) {
             // TODO: control velocity
             // this.velocity.x += 1
             if (this.offset.x - this.velocity.x > 0) {
                 this.offset.x -= this.velocity.x
             } else {
-                this.offset.x = 0
+                this.offset.x = marginLeft
             }
         }
     }
 
     public moveRight() {
-        if (this.offset.x + this.width < constants.CanvasDim.x) {
+        let marginRight = constants.CanvasDim.x - constants.Game.PlayerMaxX
+        if (this.offset.x + this.width < constants.CanvasDim.x - marginRight) {
             // TODO: control velocity
             // this.velocity.x += 1
-            if (this.offset.x + this.velocity.x < constants.CanvasDim.x) {
+            if (this.offset.x + this.velocity.x < constants.CanvasDim.x - marginRight) {
                 this.offset.x += this.velocity.x
             } else {
-                this.offset.x = constants.CanvasDim.x - this.width
+                this.offset.x = constants.CanvasDim.x - marginRight - this.width
             }
         }
     }
@@ -85,10 +87,10 @@ class player {
             if (this.offset.y > 0) {
                 // TODO: control velocity
                 // this.velocity.x += 1
-                if (this.offset.y - this.velocity.y > 0) {
+                if (this.offset.y - this.velocity.y > constants.Game.PlayerMaxY) {
                     this.offset.y -= this.velocity.y
                 } else {
-                    this.offset.y = 0
+                    this.offset.y = constants.Game.PlayerMaxY
                 }
             }
         }

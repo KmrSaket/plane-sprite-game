@@ -5,14 +5,18 @@ abstract class constants {
         MaxVelocityY: number,
         MinVelocityY: number,
         AccelerationY: number,
-        DecelerationY: number
+        DecelerationY: number,
+        PlayerMaxY: number,
+        PlayerMaxX: number
     } = {
-            AccelerationMode: true,
+            AccelerationMode: false,
             VelocityY: 4,
             MaxVelocityY: 18,
             MinVelocityY: 4,
             AccelerationY: 0.1,
-            DecelerationY: 0.5
+            DecelerationY: 0.5,
+            PlayerMaxY: 250,
+            PlayerMaxX: 850
         }
     public static CanvasDim: {
         x: number,

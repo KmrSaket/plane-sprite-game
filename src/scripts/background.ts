@@ -182,8 +182,10 @@ class background {
      * @returns foreignObjects - returns the foreign object
      */
     private createForeignObjects() {
+        let marginLeft = constants.CanvasDim.x - constants.Game.PlayerMaxX
+        let marginRight = constants.Game.PlayerMaxX
         return new foreignObjects({
-            offset: { x: util.getRandomValue({ min: 0, max: this.width }), y: 0 },
+            offset: { x: util.getRandomValue({ min: marginLeft, max: marginRight - constants.ForeignObjects.width }), y: 0 },
             height: constants.ForeignObjects.height,
             width: constants.ForeignObjects.width,
             canvasContext: this.canvasContext

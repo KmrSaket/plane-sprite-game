@@ -60,7 +60,9 @@ class foreignObjects {
     }
 
     private resetOffset() {
-        this.offset.x = util.getRandomValue({ max: constants.CanvasDim.x, min: 0 })
+        let marginLeft = constants.CanvasDim.x - constants.Game.PlayerMaxX
+        let marginRight = constants.Game.PlayerMaxX
+        this.offset.x = util.getRandomValue({ max: marginRight, min: marginLeft })
         this.offset.y = 0
     }
 
