@@ -1,6 +1,8 @@
 import constants from "../utils/constants.ts"
+import background from "./background.ts"
 
 class player {
+    private background: background
     private canvasContext: CanvasRenderingContext2D
     private width: number
     private height: number
@@ -22,7 +24,8 @@ class player {
             x,
             y
         },
-        playerImage
+        playerImage,
+        background
     }: {
         height: number,
         width: number,
@@ -31,7 +34,8 @@ class player {
             x: number,
             y: number
         },
-        playerImage: HTMLImageElement
+        playerImage: HTMLImageElement,
+        background: background
     }) {
         this.canvasContext = canvasContext
         this.width = width
@@ -42,6 +46,7 @@ class player {
             y: 5
         }
         this.image = playerImage
+        this.background = background
     }
 
     public draw() {
@@ -74,25 +79,33 @@ class player {
     }
 
     public moveUp() {
-        if (this.offset.y > 0) {
-            // TODO: control velocity
-            // this.velocity.x += 1
-            if (this.offset.y - this.velocity.y > 0) {
-                this.offset.y -= this.velocity.y
-            } else {
-                this.offset.y = 0
+        if (constants.Game.AccelerationMode) {
+            this.background.accelerate()
+        } else {
+            if (this.offset.y > 0) {
+                // TODO: control velocity
+                // this.velocity.x += 1
+                if (this.offset.y - this.velocity.y > 0) {
+                    this.offset.y -= this.velocity.y
+                } else {
+                    this.offset.y = 0
+                }
             }
         }
     }
 
     public moveDown() {
-        if (this.offset.y + this.height < constants.CanvasDim.y) {
-            // TODO: control velocity
-            // this.velocity.x += 1
-            if (this.offset.y + this.velocity.y < constants.CanvasDim.y) {
-                this.offset.y += this.velocity.y
-            } else {
-                this.offset.y = constants.CanvasDim.y - this.height
+        if (constants.Game.AccelerationMode) {
+            this.background.decelerate()
+        } else {
+            if (this.offset.y + this.height < constants.CanvasDim.y) {
+                // TODO: control velocity
+                // this.velocity.x += 1
+                if (this.offset.y + this.velocity.y < constants.CanvasDim.y) {
+                    this.offset.y += this.velocity.y
+                } else {
+                    this.offset.y = constants.CanvasDim.y - this.height
+                }
             }
         }
     }

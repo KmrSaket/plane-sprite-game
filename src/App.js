@@ -31,7 +31,7 @@ function App() {
   }
 
   let oTruckImage = new Image()
-  oTruckImage.src = constants.player.imgSrc
+  oTruckImage.src = constants.Player.imgSrc
   oTruckImage.onload = () => {
     setNumOfAssets((prev) => prev + 1)
   }

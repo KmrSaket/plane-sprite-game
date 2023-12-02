@@ -75,6 +75,18 @@ class foreignObjects {
     public touchedPlane() {
         this.resetOffset()
     }
+
+    public decelerate() {
+        if (this.velocity.y > constants.Game.MinVelocityY) {
+            this.velocity.y -= constants.Game.DecelerationY
+        }
+    }
+    public accelerate() {
+        if (this.velocity.y < constants.Game.MaxVelocityY) {
+            this.velocity.y += constants.Game.AccelerationY
+        }
+    }
+
 }
 
 export default foreignObjects

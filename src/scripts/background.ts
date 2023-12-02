@@ -41,6 +41,14 @@ class background {
             invertedImgy: 0
         }
 
+    private velocity: {
+        x: number,
+        y: number
+    } = {
+            x: 0,
+            y: constants.Game.VelocityY
+        }
+
     // XXX temp code
     private counter: number = 0
 
@@ -87,7 +95,8 @@ class background {
             height: constants.Player.height,
             width: constants.Player.width,
             canvasContext: this.canvasContext,
-            playerImage: playerImage
+            playerImage: playerImage,
+            background: this
         })
 
         // create foreign object
@@ -114,12 +123,12 @@ class background {
     }
 
     private moveDown() {
-        this.offset.normalImgy += constants.ForeignObjects.velocityY
+        this.offset.normalImgy += this.velocity.y
         if (this.offset.normalImgy > this.height) {
             this.offset.normalImgy = -this.height
         }
 
-        this.offset.invertedImgy += constants.ForeignObjects.velocityY
+        this.offset.invertedImgy += this.velocity.y
         if (this.offset.invertedImgy > this.height) {
             this.offset.invertedImgy = -this.height
         }
@@ -179,6 +188,21 @@ class background {
             width: constants.ForeignObjects.width,
             canvasContext: this.canvasContext
         })
+    }
+
+
+    public decelerate() {
+        if (this.velocity.y > constants.Game.MinVelocityY) {
+            this.velocity.y -= constants.Game.DecelerationY
+            this.object.decelerate()
+        }
+    }
+
+    public accelerate() {
+        if (this.velocity.y < constants.Game.MaxVelocityY) {
+            this.velocity.y += constants.Game.AccelerationY
+            this.object.accelerate()
+        }
     }
 
     /**
