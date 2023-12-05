@@ -1,7 +1,9 @@
 Add power ups logic (inc health, less frequent)
-Dec health on emeny collition
+emeny collition (Dec health, more random, direct on lanes, animation - blink)
 turn animation(L,R,UL,UR,DL,DR)
 Mobile touch gesture
 Responsive
 Assets
 Main menu, game over, options
+Acceleration mode
+Story line
