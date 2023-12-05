@@ -2,21 +2,19 @@ abstract class constants {
     public static Game: {
         AccelerationMode: boolean,
         VelocityY: number,
+        VelocityX: number,
         MaxVelocityY: number,
         MinVelocityY: number,
         AccelerationY: number,
         DecelerationY: number,
-        PlayerMaxY: number,
-        PlayerMaxX: number
     } = {
             AccelerationMode: false,
-            VelocityY: 4,
+            VelocityY: 10,
+            VelocityX: 0,
             MaxVelocityY: 18,
             MinVelocityY: 4,
             AccelerationY: 0.1,
-            DecelerationY: 0.5,
-            PlayerMaxY: 250,
-            PlayerMaxX: 850
+            DecelerationY: 0.5
         }
     public static CanvasDim: {
         x: number,
@@ -28,24 +26,32 @@ abstract class constants {
 
     public static Player: {
         velocityX: number,
+        velocityY: number,
         height: number,
         width: number,
-        imgSrc: string
+        imgSrc: string,
+        MaxOffsetY: number,
+        MaxOffsetX: number
     } = {
             velocityX: 10,
+            velocityY: 5,
             height: 150,
             width: 74,
-            imgSrc: "https://raw.githubusercontent.com/KmrSaket/plane-sprite-game/master/public/assets/old%20truck.png"
+            imgSrc: "https://raw.githubusercontent.com/KmrSaket/plane-sprite-game/master/public/assets/old%20truck.png",
+            MaxOffsetY: 250,
+            MaxOffsetX: 850
         }
 
     public static ForeignObjects: {
         velocityY: number,
+        velocityX: number,
         height: number,
         width: number
     } = {
             velocityY: 4,
-            height: 20,
-            width: 20
+            velocityX: 0,
+            height: 150,
+            width: 74,
         }
 
     public static Background: {

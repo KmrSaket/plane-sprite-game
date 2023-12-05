@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import background from './scripts/background.ts';
-import constants from './utils/constants.ts';
+import game from './scripts/game.ts';
 
 function Game({bgImage,altBgImage,playerImage}) {
 
@@ -11,14 +10,12 @@ function Game({bgImage,altBgImage,playerImage}) {
     if(canvasRef.current){
       if(!gameStarted){
         let canvas = document.querySelector("canvas");
-        new background({
-          height: constants.CanvasDim.y,
-          width: constants.CanvasDim.x,
-          canvas: canvas,
-          image: bgImage,
-          altImage: altBgImage,
-          playerImage: playerImage
-        });
+        new game({
+          canvas:canvas,
+          playerImage:playerImage,
+          backgroundImage : bgImage,
+          backgroundInvImage:altBgImage
+        })
         setGameStarted(true)
       }
     }

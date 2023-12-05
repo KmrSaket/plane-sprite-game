@@ -1,17 +1,19 @@
 import constants from "../utils/constants.ts"
+import createObjects from "../utils/createObjects.ts"
 import util from "../utils/util.ts"
-import foreignObjects from "./foreignObjects.ts"
-import player from "./player.ts"
+import background from "./sprites/background.ts"
+import foreignObjects from "./sprites/foreignObjects.ts"
+import player from "./sprites/player.ts"
 
-class background {
+class game {
 
     // private attributes
     private canvas: HTMLCanvasElement
     private canvasContext: CanvasRenderingContext2D
     private player: player
-    private object: foreignObjects
-    private width: number
-    private height: number
+    private background: background
+    private backgroundInv: background
+    private enemy: foreignObjects
     private keyEvent: {
         lastPressedX: string,
         leftPressed: boolean,
@@ -27,27 +29,6 @@ class background {
             upPressed: false,
             downPressed: false
         }
-    private normalImage: HTMLImageElement
-    private invertedImage: HTMLImageElement
-    private offset: {
-        normalImgx: number,
-        normalImgy: number,
-        invertedImgx: number,
-        invertedImgy: number
-    } = {
-            normalImgx: 0,
-            normalImgy: 0,
-            invertedImgx: 0,
-            invertedImgy: 0
-        }
-
-    private velocity: {
-        x: number,
-        y: number
-    } = {
-            x: 0,
-            y: constants.Game.VelocityY
-        }
 
     // XXX temp code
     private counter: number = 0
@@ -62,45 +43,32 @@ class background {
      * @param image - background image
      */
     constructor({
-        height,
-        width,
         canvas,
-        image,
-        playerImage
+        playerImage,
+        backgroundImage,
+        backgroundInvImage
     }: {
-        height: number,
-        width: number,
         canvas: HTMLCanvasElement,
-        image: HTMLImageElement,
-        playerImage: HTMLImageElement
+        playerImage: HTMLImageElement,
+        backgroundImage: HTMLImageElement,
+        backgroundInvImage: HTMLImageElement
     }) {
         this.canvas = canvas
-        this.height = height
-        this.width = width
         this.canvasContext = this.canvas.getContext("2d")
-        this.canvas.width = width
-        this.canvas.height = height
+        this.canvas.width = constants.CanvasDim.x
+        this.canvas.height = constants.CanvasDim.y
 
-        this.offset.invertedImgy = -this.height
+        this.background = createObjects.createBackground({ canvasContext: this.canvasContext, inverted: false, image: backgroundImage })
+        this.background.draw()
 
-        // draw background initially
-        this.normalImage = image
-        this.canvasContext.drawImage(this.normalImage, this.offset.normalImgx, this.offset.normalImgy, this.width, this.height)
+        this.backgroundInv = createObjects.createBackground({ canvasContext: this.canvasContext, inverted: true, image: backgroundInvImage })
+        this.backgroundInv.draw()
 
-        this.invertedImage = image
-
-        // create plane object
-        this.player = new player({
-            offset: { x: this.width / 2, y: this.height - constants.Player.height },
-            height: constants.Player.height,
-            width: constants.Player.width,
-            canvasContext: this.canvasContext,
-            playerImage: playerImage,
-            background: this
-        })
+        this.player = createObjects.createPlayer({ canvasContext: this.canvasContext, image: playerImage })
+        this.player.draw()
 
         // create foreign object
-        this.object = this.createForeignObjects()
+        this.enemy = createObjects.createForeignObjects({ canvasContext: this.canvasContext, image: playerImage })
 
         // attach event listeners
         this.attachKeyDownEventListener()
@@ -110,29 +78,9 @@ class background {
         this.animate()
     }
 
-    /**
-     * Draw background
-     */
-    private draw() {
-        this.moveDown()
-        this.canvasContext.fillStyle = "#FFFFFF"
-        this.canvasContext.fillRect(0, 0, this.width, this.height)
 
-        this.canvasContext.drawImage(this.normalImage, this.offset.normalImgx, this.offset.normalImgy, this.width, this.height)
-        this.canvasContext.drawImage(this.invertedImage, this.offset.invertedImgx, this.offset.invertedImgy, this.width, this.height)
-    }
 
-    private moveDown() {
-        this.offset.normalImgy += this.velocity.y
-        if (this.offset.normalImgy > this.height) {
-            this.offset.normalImgy = -this.height
-        }
 
-        this.offset.invertedImgy += this.velocity.y
-        if (this.offset.invertedImgy > this.height) {
-            this.offset.invertedImgy = -this.height
-        }
-    }
 
     /**
      * Update offsets on key event, check collision and 
@@ -146,7 +94,6 @@ class background {
             this.player.moveRight()
         }
 
-
         // Move up on press of U and else Move down on press of D
         if (this.keyEvent.lastPressedY === "U" && this.keyEvent.upPressed) {
             this.player.moveUp()
@@ -158,18 +105,19 @@ class background {
         if (util.isCollision({
             offsetOne: this.player.getOffset(),
             DimensionOne: this.player.getDimension(),
-            offsetTwo: this.object.getOffset(),
-            DimensionTwo: this.object.getDimension()
+            offsetTwo: this.enemy.getOffset(),
+            DimensionTwo: this.enemy.getDimension()
         })) {
             // if collided increase the collision counter
-            this.object.touchedPlane()
+            this.enemy.touchedPlayer()
             this.counter++
         }
 
         // draw background first, then plane and lastly foreign object
-        this.draw()
+        this.background.draw()
+        this.backgroundInv.draw()
         this.player.draw()
-        this.object.draw()
+        this.enemy.draw()
 
         //XXX: temp code for counter
         this.canvasContext.font = "20px Comic Sans MS";
@@ -177,35 +125,6 @@ class background {
         this.canvasContext.fillText("Collision counter: " + this.counter, 10, 20)
     }
 
-    /**
-     * Method to create foreign object
-     * @returns foreignObjects - returns the foreign object
-     */
-    private createForeignObjects() {
-        let marginLeft = constants.CanvasDim.x - constants.Game.PlayerMaxX
-        let marginRight = constants.Game.PlayerMaxX
-        return new foreignObjects({
-            offset: { x: util.getRandomValue({ min: marginLeft, max: marginRight - constants.ForeignObjects.width }), y: 0 },
-            height: constants.ForeignObjects.height,
-            width: constants.ForeignObjects.width,
-            canvasContext: this.canvasContext
-        })
-    }
-
-
-    public decelerate() {
-        if (this.velocity.y > constants.Game.MinVelocityY) {
-            this.velocity.y -= constants.Game.DecelerationY
-            this.object.decelerate()
-        }
-    }
-
-    public accelerate() {
-        if (this.velocity.y < constants.Game.MaxVelocityY) {
-            this.velocity.y += constants.Game.AccelerationY
-            this.object.accelerate()
-        }
-    }
 
     /**
      * To attach key down event for L/R/U/D
@@ -277,4 +196,4 @@ class background {
     }
 };
 
-export default background;
+export default game;
