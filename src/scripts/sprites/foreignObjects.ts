@@ -34,17 +34,6 @@ class foreignObjects extends sprite {
         this.resetOffset()
     }
 
-    protected decelerate() {
-        if (this.getVelocity().y > constants.Game.MinVelocityY) {
-            this.setVelocityY({ value: (this.getVelocity().y - constants.Game.DecelerationY) })
-        }
-    }
-
-    protected accelerate() {
-        if (this.getVelocity().y < constants.Game.MaxVelocityY) {
-            this.setVelocityY({ value: (this.getVelocity().y + constants.Game.AccelerationY) })
-        }
-    }
 
 }
 
