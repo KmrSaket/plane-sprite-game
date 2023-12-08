@@ -20,8 +20,8 @@ abstract class constants {
         x: number,
         y: number
     } = {
-            x: 1000,
-            y: 500
+            x: window.innerWidth,
+            y: window.innerHeight
         }
 
     public static Player: {
