@@ -5,6 +5,10 @@ class sprite {
         x: number,
         y: number
     }
+    private drawingDim: {
+        x: number,
+        y: number
+    }
     private offset: {
         x: number,
         y: number,
@@ -22,6 +26,7 @@ class sprite {
         y: number
     }
     private image: HTMLImageElement
+    private drawingImage: HTMLImageElement
     private canvasContext: CanvasRenderingContext2D
 
 
@@ -71,10 +76,16 @@ class sprite {
         this.velocity = { x: velocityX, y: velocityY }
         this.defaultVelocity = this.velocity
         this.image = image
+        this.drawingImage = image
+        this.drawingDim = { x: dimensionX, y: dimensionY }
+        console.log("first", this.dimension)
     }
 
     public draw() {
-        this.canvasContext.drawImage(this.image, this.offset.x, this.offset.y, this.dimension.x, this.dimension.y);
+        this.canvasContext.drawImage(this.drawingImage, this.offset.x, this.offset.y, this.drawingDim.x, this.drawingDim.y);
+        this.drawingImage = this.image
+        this.drawingDim.x = this.dimension.x
+        this.drawingDim.y = this.dimension.y
     }
 
     public moveLeft() {
@@ -142,6 +153,12 @@ class sprite {
                 }
             }
         }
+    }
+
+    protected setDrawingProps({ image, x, y }: { image: HTMLImageElement, x: number, y: number }) {
+        this.drawingImage = image
+        this.drawingDim.x = x
+        this.drawingDim.y = y
     }
 
     protected resetVelocity() {

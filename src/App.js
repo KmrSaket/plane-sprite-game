@@ -5,16 +5,6 @@ import Game from './Game.js';
 
 function App() {
   
-  // function startGame(){
-  //   let canvas = document.querySelector("canvas");
-  //   new background({
-  //     height: constants.CanvasDim.y,
-  //     width: constants.CanvasDim.x,
-  //     canvas: canvas,
-  //     image: oBackgroundImage
-  //   });
-  // }
-  
   let [numOfAssets, setNumOfAssets] = useState(0)
   let [displayCanvas, setDisplayCanvas] = useState(false)
 
@@ -36,8 +26,20 @@ function App() {
     setNumOfAssets((prev) => prev + 1)
   }
 
+  let oTruckImageLeft = new Image()
+  oTruckImageLeft.src = constants.Player.imgSrcLeft
+  oTruckImageLeft.onload = () => {
+    setNumOfAssets((prev) => prev + 1)
+  }
+
+  let oTruckImageRight = new Image()
+  oTruckImageRight.src = constants.Player.imgSrcRight
+  oTruckImageRight.onload = () => {
+    setNumOfAssets((prev) => prev + 1)
+  }
+
   useEffect(() => {
-    if(numOfAssets === 3){
+    if(numOfAssets === 5){
       setDisplayCanvas(true)
     }
   }, [numOfAssets])
@@ -47,7 +49,8 @@ function App() {
       {
         displayCanvas
         &&
-       <Game bgImage={oBackgroundImage} playerImage={oTruckImage} altBgImage={oAltBackgroundImage}/>
+       <Game bgImage={oBackgroundImage} playerImage={oTruckImage} altBgImage={oAltBackgroundImage}
+       playerImageLeft={oTruckImageLeft} playerImageRight={oTruckImageRight}/>
       }
     </div>
   );

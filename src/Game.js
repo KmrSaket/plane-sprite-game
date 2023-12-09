@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import game from './scripts/game.ts';
 
-function Game({bgImage,altBgImage,playerImage}) {
+function Game({bgImage,altBgImage,playerImage, playerImageLeft, playerImageRight}) {
 
   let canvasRef = useRef(null)
   let [gameStarted,setGameStarted] = useState(false)
@@ -11,20 +11,20 @@ function Game({bgImage,altBgImage,playerImage}) {
       if(!gameStarted){
         let canvas = document.querySelector("canvas");
         new game({
-          canvas:canvas,
-          playerImage:playerImage,
+          canvas,
+          playerImage,
+          playerImageLeft,
+          playerImageRight,
           backgroundImage : bgImage,
           backgroundInvImage:altBgImage
         })
         setGameStarted(true)
       }
     }
-  },[altBgImage, bgImage, gameStarted, playerImage])
+  },[altBgImage, bgImage, gameStarted, playerImage, playerImageLeft, playerImageRight])
 
   return (
-    <>
-      <canvas id="canvas" ref={canvasRef}/>
-    </>
+      <canvas id="canvas" ref={canvasRef}></canvas>
   );
 }
 

@@ -28,16 +28,24 @@ abstract class constants {
         velocityX: number,
         velocityY: number,
         height: number,
+        heightTurning: number,
         width: number,
+        widthTurning: number,
         imgSrc: string,
+        imgSrcLeft: string,
+        imgSrcRight: string,
         MaxOffsetY: number,
         MaxOffsetX: number
     } = {
             velocityX: 10,
             velocityY: 5,
             height: 150,
+            heightTurning: 150,
             width: 74,
+            widthTurning: 140,
             imgSrc: "https://raw.githubusercontent.com/KmrSaket/plane-sprite-game/master/public/assets/old%20truck.png",
+            imgSrcLeft: "https://raw.githubusercontent.com/KmrSaket/plane-sprite-game/master/public/assets/old%20truck%20-%20left.png",
+            imgSrcRight: "https://raw.githubusercontent.com/KmrSaket/plane-sprite-game/master/public/assets/old%20truck%20-%20right.png",
             MaxOffsetY: window.innerHeight * 0.5,
             MaxOffsetX: window.innerWidth * 0.85
         }

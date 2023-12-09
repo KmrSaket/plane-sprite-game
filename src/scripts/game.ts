@@ -45,11 +45,15 @@ class game {
     constructor({
         canvas,
         playerImage,
+        playerImageLeft,
+        playerImageRight,
         backgroundImage,
         backgroundInvImage
     }: {
         canvas: HTMLCanvasElement,
         playerImage: HTMLImageElement,
+        playerImageLeft: HTMLImageElement,
+        playerImageRight: HTMLImageElement,
         backgroundImage: HTMLImageElement,
         backgroundInvImage: HTMLImageElement
     }) {
@@ -64,7 +68,7 @@ class game {
         this.backgroundInv = createObjects.createBackground({ canvasContext: this.canvasContext, inverted: true, image: backgroundInvImage })
         this.backgroundInv.draw()
 
-        this.player = createObjects.createPlayer({ canvasContext: this.canvasContext, image: playerImage })
+        this.player = createObjects.createPlayer({ canvasContext: this.canvasContext, image: playerImage, imageLeft: playerImageLeft, imageRight: playerImageRight })
         this.player.draw()
 
         // create foreign object

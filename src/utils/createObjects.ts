@@ -7,9 +7,9 @@ import util from "./util.ts"
 
 abstract class createObjects {
     public static createPlayer({
-        canvasContext, image
+        canvasContext, image, imageLeft, imageRight
     }: {
-        canvasContext: CanvasRenderingContext2D, image: HTMLImageElement
+        canvasContext: CanvasRenderingContext2D, image: HTMLImageElement, imageLeft: HTMLImageElement, imageRight: HTMLImageElement
     }) {
         let oSpriteConfig: spriteConstructor = {
             dimension: {
@@ -32,7 +32,9 @@ abstract class createObjects {
             image
         }
         return new player({
-            spriteConfig: oSpriteConfig
+            spriteConfig: oSpriteConfig,
+            imageLeft,
+            imageRight
         })
     }
 
