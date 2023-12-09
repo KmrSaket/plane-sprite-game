@@ -38,8 +38,8 @@ abstract class constants {
             height: 150,
             width: 74,
             imgSrc: "https://raw.githubusercontent.com/KmrSaket/plane-sprite-game/master/public/assets/old%20truck.png",
-            MaxOffsetY: 250,
-            MaxOffsetX: 850
+            MaxOffsetY: window.innerHeight * 0.5,
+            MaxOffsetX: window.innerWidth * 0.85
         }
 
     public static ForeignObjects: {
