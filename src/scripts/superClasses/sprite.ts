@@ -1,6 +1,8 @@
 import constants from "../../utils/constants.ts"
 
 class sprite {
+    private health: number = 100
+    private spriteType: number
     private dimension: {
         x: number,
         y: number
@@ -78,7 +80,13 @@ class sprite {
         this.image = image
         this.drawingImage = image
         this.drawingDim = { x: dimensionX, y: dimensionY }
-        console.log("first", this.dimension)
+        this.setSpriteType();
+    }
+
+    private setSpriteType() {
+        if (Object.getPrototypeOf(this).constructor.name === "player") {
+            this.spriteType = 1
+        }
     }
 
     public draw() {
@@ -86,6 +94,16 @@ class sprite {
         this.drawingImage = this.image
         this.drawingDim.x = this.dimension.x
         this.drawingDim.y = this.dimension.y
+    }
+
+    protected collided() {
+        if (this.spriteType === 1) {
+            this.health -= 10
+        }
+    }
+
+    public getHealth() {
+        return this.health
     }
 
     public moveLeft() {

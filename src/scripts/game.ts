@@ -30,6 +30,7 @@ class game {
             downPressed: false
         }
 
+    private gameState: string = "run"
     // XXX temp code
     private counter: number = 0
 
@@ -114,6 +115,7 @@ class game {
         })) {
             // if collided increase the collision counter
             this.enemy.touchedPlayer()
+            this.player.touchedEnemy()
             this.counter++
         }
 
@@ -127,8 +129,15 @@ class game {
         this.canvasContext.font = "20px Comic Sans MS";
         this.canvasContext.fillStyle = "grey"
         this.canvasContext.fillText("Collision counter: " + this.counter, 10, 20)
+        this.canvasContext.fillText("Health: " + this.player.getHealth(), 10, 40)
+        if (this.player.getHealth() <= 0) {
+            this.endGame({ type: "loss" })
+        }
     }
 
+    private endGame({ type }: { type: string }) {
+        this.gameState = type
+    }
 
     /**
      * To attach key down event for L/R/U/D
@@ -194,7 +203,13 @@ class game {
      * Method to animate in loop
      */
     private animate = () => {
-        this.update()
+        if (this.gameState === "run") {
+            this.update()
+        } else if (this.gameState === "loss") {
+            // show lost UI
+        } else if (this.gameState === "win") {
+            // show win UI
+        }
         window.requestAnimationFrame(this.animate)
 
     }

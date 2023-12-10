@@ -32,6 +32,10 @@ class player extends sprite {
     public moveDown() {
         super.moveDown({ isRestricted: true })
     }
+
+    public touchedEnemy() {
+        super.collided()
+    }
 }
 
 export default player;
