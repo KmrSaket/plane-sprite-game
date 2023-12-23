@@ -51,11 +51,15 @@ abstract class constants {
         }
 
     public static ForeignObjects: {
+        enemySrc: string,
+        powerupSrc: string,
         velocityY: number,
         velocityX: number,
         height: number,
         width: number
     } = {
+            enemySrc: "https://raw.githubusercontent.com/KmrSaket/plane-sprite-game/master/public/assets/old%20truck.png",
+            powerupSrc: "https://raw.githubusercontent.com/KmrSaket/plane-sprite-game/master/public/assets/new%20truck.png",
             velocityY: 4,
             velocityX: 0,
             height: 150,

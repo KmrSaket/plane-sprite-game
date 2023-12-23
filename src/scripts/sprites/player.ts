@@ -34,7 +34,11 @@ class player extends sprite {
     }
 
     public touchedEnemy() {
-        super.collided()
+        super.collided({ type: -1 })
+    }
+
+    public touchedPowerUp() {
+        super.collided({ type: 1 })
     }
 }
 

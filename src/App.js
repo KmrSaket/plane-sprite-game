@@ -20,6 +20,12 @@ function App() {
     setNumOfAssets((prev) => prev + 1)
   }
 
+  let oPowerupImage = new Image()
+  oPowerupImage.src = constants.ForeignObjects.powerupSrc
+  oPowerupImage.onload = () => {
+    setNumOfAssets((prev) => prev + 1)
+  }
+
   let oTruckImage = new Image()
   oTruckImage.src = constants.Player.imgSrc
   oTruckImage.onload = () => {
@@ -39,7 +45,7 @@ function App() {
   }
 
   useEffect(() => {
-    if(numOfAssets === 5){
+    if(numOfAssets === 6){
       setDisplayCanvas(true)
     }
   }, [numOfAssets])
@@ -49,7 +55,7 @@ function App() {
       {
         displayCanvas
         &&
-       <Game bgImage={oBackgroundImage} playerImage={oTruckImage} altBgImage={oAltBackgroundImage}
+       <Game bgImage={oBackgroundImage} powerupImage={oPowerupImage} playerImage={oTruckImage} altBgImage={oAltBackgroundImage}
        playerImageLeft={oTruckImageLeft} playerImageRight={oTruckImageRight}/>
       }
     </div>

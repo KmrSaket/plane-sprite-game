@@ -14,6 +14,7 @@ class game {
     private background: background
     private backgroundInv: background
     private enemy: foreignObjects
+    private powerup: foreignObjects
     private keyEvent: {
         lastPressedX: string,
         leftPressed: boolean,
@@ -45,6 +46,7 @@ class game {
      */
     constructor({
         canvas,
+        powerupImage,
         playerImage,
         playerImageLeft,
         playerImageRight,
@@ -52,6 +54,7 @@ class game {
         backgroundInvImage
     }: {
         canvas: HTMLCanvasElement,
+        powerupImage: HTMLImageElement,
         playerImage: HTMLImageElement,
         playerImageLeft: HTMLImageElement,
         playerImageRight: HTMLImageElement,
@@ -74,6 +77,7 @@ class game {
 
         // create foreign object
         this.enemy = createObjects.createForeignObjects({ canvasContext: this.canvasContext, image: playerImage })
+        this.powerup = createObjects.createForeignObjects({ canvasContext: this.canvasContext, image: powerupImage })
 
         // attach event listeners
         this.attachKeyDownEventListener()
@@ -119,11 +123,24 @@ class game {
             this.counter++
         }
 
+        // check if player has collided with powerup
+        if (util.isCollision({
+            offsetOne: this.player.getOffset(),
+            DimensionOne: this.player.getDimension(),
+            offsetTwo: this.powerup.getOffset(),
+            DimensionTwo: this.powerup.getDimension()
+        })) {
+            // if collided increase the collision counter
+            this.powerup.touchedPlayer()
+            this.player.touchedPowerUp()
+        }
+
         // draw background first, then plane and lastly foreign object
         this.background.draw()
         this.backgroundInv.draw()
         this.player.draw()
         this.enemy.draw()
+        this.powerup.draw()
 
         //XXX: temp code for counter
         this.canvasContext.font = "20px Comic Sans MS";

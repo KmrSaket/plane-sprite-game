@@ -96,9 +96,9 @@ class sprite {
         this.drawingDim.y = this.dimension.y
     }
 
-    protected collided() {
+    protected collided({ type }: { type: number }) {
         if (this.spriteType === 1) {
-            this.health -= 10
+            this.health += (10 * type)
         }
     }
 
