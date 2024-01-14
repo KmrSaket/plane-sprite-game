@@ -110,7 +110,7 @@ class game {
             this.player.moveDown()
         }
 
-        // check if plane has collided with foriegn object
+        // check if player has collided with foriegn object
         if (util.isCollision({
             offsetOne: this.player.getOffset(),
             DimensionOne: this.player.getDimension(),

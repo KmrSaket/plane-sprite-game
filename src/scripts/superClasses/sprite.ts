@@ -2,6 +2,10 @@ import constants from "../../utils/constants.ts"
 
 class sprite {
     private health: number = 100
+    private blinkAnimation: {
+        isBlinking: boolean,
+        isShowAnimation: boolean
+    }
     private spriteType: number
     private dimension: {
         x: number,
@@ -81,6 +85,10 @@ class sprite {
         this.drawingImage = image
         this.drawingDim = { x: dimensionX, y: dimensionY }
         this.setSpriteType();
+        this.blinkAnimation = {
+            isBlinking: false,
+            isShowAnimation: false
+        }
     }
 
     private setSpriteType() {
@@ -90,7 +98,14 @@ class sprite {
     }
 
     public draw() {
-        this.canvasContext.drawImage(this.drawingImage, this.offset.x, this.offset.y, this.drawingDim.x, this.drawingDim.y);
+        if (this.blinkAnimation.isBlinking) {
+            this.blinkAnimation.isShowAnimation = !this.blinkAnimation.isShowAnimation;
+            if (this.blinkAnimation.isShowAnimation) {
+                this.canvasContext.drawImage(this.drawingImage, this.offset.x, this.offset.y, this.drawingDim.x, this.drawingDim.y);
+            }
+        } else {
+            this.canvasContext.drawImage(this.drawingImage, this.offset.x, this.offset.y, this.drawingDim.x, this.drawingDim.y);
+        }
         this.drawingImage = this.image
         this.drawingDim.x = this.dimension.x
         this.drawingDim.y = this.dimension.y
@@ -226,6 +241,13 @@ class sprite {
         if (this.velocity.y < constants.Game.MaxVelocityY) {
             this.velocity.y += constants.Game.AccelerationY
         }
+    }
+
+    protected blinkAnimate() {
+        this.blinkAnimation.isBlinking = true
+        setTimeout(() => {
+            this.blinkAnimation.isBlinking = false
+        }, 500);
     }
 }
 

@@ -35,6 +35,7 @@ class player extends sprite {
 
     public touchedEnemy() {
         super.collided({ type: -1 })
+        super.blinkAnimate();
     }
 
     public touchedPowerUp() {
