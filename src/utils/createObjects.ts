@@ -77,30 +77,34 @@ abstract class createObjects {
     }: {
         canvasContext: CanvasRenderingContext2D, image: HTMLImageElement
     }) {
-        let oSpriteConfig: spriteConstructor = {
-            dimension: {
-                x: constants.ForeignObjects.width,
-                y: constants.ForeignObjects.height
-            },
-            offset: {
-                x: util.getRandomValue({
-                    min: constants.CanvasDim.x - constants.Player.MaxOffsetX,
-                    max: constants.Player.MaxOffsetX - constants.ForeignObjects.width
-                }),
-                y: -constants.ForeignObjects.height,
-                minX: constants.CanvasDim.x - constants.Player.MaxOffsetX,
-                maxX: constants.Player.MaxOffsetX,
-                minY: constants.Player.MaxOffsetY,
-                maxY: constants.CanvasDim.y
-            },
-            velocity: {
-                x: 0,
-                y: constants.ForeignObjects.velocityY
-            },
-            canvasContext: canvasContext,
-            image
+        let aSpriteConfig: foreignObjects[] = []
+        for (let index = 0; index < constants.Game.EnemyCount; index++) {
+            let oSpriteConfig: spriteConstructor = {
+                dimension: {
+                    x: constants.ForeignObjects.width,
+                    y: constants.ForeignObjects.height
+                },
+                offset: {
+                    x: util.getRandomValue({
+                        min: constants.CanvasDim.x - constants.Player.MaxOffsetX,
+                        max: constants.Player.MaxOffsetX - constants.ForeignObjects.width
+                    }),
+                    y: -constants.ForeignObjects.height,
+                    minX: constants.CanvasDim.x - constants.Player.MaxOffsetX,
+                    maxX: constants.Player.MaxOffsetX,
+                    minY: constants.Player.MaxOffsetY,
+                    maxY: constants.CanvasDim.y
+                },
+                velocity: {
+                    x: 0,
+                    y: constants.ForeignObjects.velocityY
+                },
+                canvasContext: canvasContext,
+                image
+            }
+            aSpriteConfig.push(new foreignObjects({ spriteConfig: oSpriteConfig }))
         }
-        return new foreignObjects({ spriteConfig: oSpriteConfig })
+        return aSpriteConfig
     }
 }
 

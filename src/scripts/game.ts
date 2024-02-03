@@ -13,8 +13,8 @@ class game {
     private player: player
     private background: background
     private backgroundInv: background
-    private enemy: foreignObjects
-    private powerup: foreignObjects
+    private enemy: foreignObjects[]
+    // private powerup: foreignObjects
     private keyEvent: {
         lastPressedX: string,
         leftPressed: boolean,
@@ -31,7 +31,7 @@ class game {
             downPressed: false
         }
 
-    private gameState: string = "run"
+    private gameState: string = "initial"
     // XXX temp code
     private counter: number = 0
 
@@ -76,8 +76,9 @@ class game {
         this.player.draw()
 
         // create foreign object
+
         this.enemy = createObjects.createForeignObjects({ canvasContext: this.canvasContext, image: playerImage })
-        this.powerup = createObjects.createForeignObjects({ canvasContext: this.canvasContext, image: powerupImage })
+        // this.powerup = createObjects.createForeignObjects({ canvasContext: this.canvasContext, image: powerupImage })
 
         // attach event listeners
         this.attachKeyDownEventListener()
@@ -111,36 +112,39 @@ class game {
         }
 
         // check if player has collided with foriegn object
-        if (util.isCollision({
-            offsetOne: this.player.getOffset(),
-            DimensionOne: this.player.getDimension(),
-            offsetTwo: this.enemy.getOffset(),
-            DimensionTwo: this.enemy.getDimension()
-        })) {
-            // if collided increase the collision counter
-            this.enemy.touchedPlayer()
-            this.player.touchedEnemy()
-            this.counter++
-        }
+        for (let index = 0; index < constants.Game.EnemyCount; index++) {
+            if (util.isCollision({
+                offsetOne: this.player.getOffset(),
+                DimensionOne: this.player.getDimension(),
+                offsetTwo: this.enemy[index].getOffset(),
+                DimensionTwo: this.enemy[index].getDimension()
+            })) {
+                // if collided increase the collision counter
+                this.enemy[index].touchedPlayer()
+                this.player.touchedEnemy()
+                this.counter++
+            }
 
-        // check if player has collided with powerup
-        if (util.isCollision({
-            offsetOne: this.player.getOffset(),
-            DimensionOne: this.player.getDimension(),
-            offsetTwo: this.powerup.getOffset(),
-            DimensionTwo: this.powerup.getDimension()
-        })) {
-            // if collided increase the collision counter
-            this.powerup.touchedPlayer()
-            this.player.touchedPowerUp()
+            // // check if player has collided with powerup
+            // if (util.isCollision({
+            //     offsetOne: this.player.getOffset(),
+            //     DimensionOne: this.player.getDimension(),
+            //     offsetTwo: this.powerup.getOffset(),
+            //     DimensionTwo: this.powerup.getDimension()
+            // })) {
+            //     // if collided increase the collision counter
+            //     this.powerup.touchedPlayer()
+            //     this.player.touchedPowerUp()
+            // }
         }
-
         // draw background first, then plane and lastly foreign object
         this.background.draw()
         this.backgroundInv.draw()
         this.player.draw()
-        this.enemy.draw()
-        this.powerup.draw()
+        for (let index = 0; index < constants.Game.EnemyCount; index++) {
+            this.enemy[index].draw()
+        }
+        // this.powerup.draw()
 
         //XXX: temp code for counter
         this.canvasContext.font = "20px Comic Sans MS";
@@ -203,6 +207,9 @@ class game {
                     this.keyEvent.upPressed = false
                     if (this.keyEvent.upPressed) {
                         this.keyEvent.lastPressedY = "D"
+                    }
+                    if (this.gameState === "initial") {
+                        this.gameState = "run"
                     }
                     break
                 case "ArrowDown":

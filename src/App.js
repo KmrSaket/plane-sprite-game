@@ -6,6 +6,7 @@ import Game from './Game.js';
 function App() {
   
   let [numOfAssets, setNumOfAssets] = useState(0)
+  let [gameMode, setGameMode] = useState(0) // 0-> not started; 1-> single player; 2-> second player
   let [displayCanvas, setDisplayCanvas] = useState(false)
 
   let oBackgroundImage = new Image()
@@ -51,13 +52,27 @@ function App() {
   }, [numOfAssets])
   
   return (
+    // <div className="App">
+
+    // </div>
     <div className="App">
-      {
+       {
+         gameMode === 0 ?
+         
+         <div>
+           <button onClick={()=>setGameMode(1)}>1 Player Mode</button>
+           <button onClick={()=>setGameMode(2)}>2 Player Mode</button>.
+         </div>
+        
+        :
+
         displayCanvas
-        &&
-       <Game bgImage={oBackgroundImage} powerupImage={oPowerupImage} playerImage={oTruckImage} altBgImage={oAltBackgroundImage}
-       playerImageLeft={oTruckImageLeft} playerImageRight={oTruckImageRight}/>
-      }
+         &&
+        <Game bgImage={oBackgroundImage} powerupImage={oPowerupImage} playerImage={oTruckImage} altBgImage={oAltBackgroundImage}
+          playerImageLeft={oTruckImageLeft} playerImageRight={oTruckImageRight}/>
+        
+
+       }
     </div>
   );
 }

@@ -20,12 +20,12 @@ class player extends sprite {
     }
 
     public moveLeft() {
-        this.setDrawingProps({ image: this.imageLeft, x: constants.Player.widthTurning, y: constants.Player.heightTurning })
+        // this.setDrawingProps({ image: this.imageLeft, x: constants.Player.widthTurning, y: constants.Player.heightTurning })
         super.moveLeft()
     }
 
     public moveRight() {
-        this.setDrawingProps({ image: this.imageRight, x: constants.Player.widthTurning, y: constants.Player.heightTurning })
+        // this.setDrawingProps({ image: this.imageRight, x: constants.Player.widthTurning, y: constants.Player.heightTurning })
         super.moveRight()
     }
 
@@ -35,7 +35,7 @@ class player extends sprite {
 
     public touchedEnemy() {
         super.collided({ type: -1 })
-        super.blinkAnimate();
+        // super.blinkAnimate();
     }
 
     public touchedPowerUp() {

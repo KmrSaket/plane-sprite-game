@@ -7,6 +7,7 @@ abstract class constants {
         MinVelocityY: number,
         AccelerationY: number,
         DecelerationY: number,
+        EnemyCount: number
     } = {
             AccelerationMode: false,
             VelocityY: 10,
@@ -14,7 +15,8 @@ abstract class constants {
             MaxVelocityY: 18,
             MinVelocityY: 4,
             AccelerationY: 0.1,
-            DecelerationY: 0.5
+            DecelerationY: 0.5,
+            EnemyCount: 4
         }
     public static CanvasDim: {
         x: number,
